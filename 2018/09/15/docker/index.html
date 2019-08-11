@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="H.J.Yang">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/09/15/docker/docker.jpg">
-<meta property="og:updated_time" content="2018-09-17T13:21:27.548Z">
+<meta property="og:updated_time" content="2019-08-11T15:33:46.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 新萌实战">
 <meta name="twitter:image" content="http://yoursite.com/2018/09/15/docker/docker.jpg">
@@ -381,7 +381,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-09-17 21:21:27" itemprop="dateModified" datetime="2018-09-17T21:21:27+08:00">2018-09-17</time>
+                <time title="修改时间：2019-08-11 23:33:46" itemprop="dateModified" datetime="2019-08-11T23:33:46+08:00">2019-08-11</time>
               
             
           </span>
@@ -441,85 +441,94 @@
 
       
         <p><img src="/2018/09/15/docker/docker.jpg"></p>
-<a id="more"></a> 
+<a id="more"></a>
 <p>这篇文章，算是这个主页搭建起来的第一篇文章，内容比较简单但不乏有参考其他文章的，先谢过，各路大侠。本文基于 Centos7 的入门实战，详情请参看<a href="https://docs.docker.com/" target="_blank" rel="noopener">官方文档</a>。从简单的从构建第一个镜像开始，到发布 web 应用，会创建 mysql 数据容器 和 tomcat 容器。</p>
-<h2 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h2><p>目前，CentOS 仅发行版本中的内核支持 Docker。<br>Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。</p>
+<h2 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h2><p>目前，CentOS 仅发行版本中的内核支持 Docker。<br>Docker 运行在 CentOS 7 上，要求系统为 64 位、系统内核版本为 3.10 以上。</p>
 <h3 id="CentOS-安装-Dodker-CE"><a href="#CentOS-安装-Dodker-CE" class="headerlink" title="CentOS 安装 Dodker CE"></a>CentOS 安装 Dodker CE</h3><p>参考<a href="http://www.runoob.com/docker/centos-docker-install.html" target="_blank" rel="noopener">菜鸟教程</a>或者<a href="https://docs.docker.com/install/linux/docker-ce/centos/#set-up-the-repository" target="_blank" rel="noopener">官网</a></p>
-<p>安装一些必要的系统工具：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure></p>
-<p>添加软件源信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure></p>
-<p>更新 yum 缓存:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum makecache fast</span><br></pre></td></tr></table></figure></p>
-<p>安装 Docker-ce:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker-ce</span><br></pre></td></tr></table></figure></p>
-<p>启动 Docker 服务:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker start <span class="comment">#或 systemctl start docker</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="镜像加速"><a href="#镜像加速" class="headerlink" title="镜像加速"></a>镜像加速</h3><p>新版的 Docker 使用 /etc/docker/daemon.json（Linux）,如果没有这个文件就创建一个（我本机是没有的）。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"registry-mirrors"</span>: [<span class="string">"http://hub-mirror.c.163.com"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="删除-Docker-CE"><a href="#删除-Docker-CE" class="headerlink" title="删除 Docker CE"></a>删除 Docker CE</h3><p>执行以下命令来删除 Docker CE：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker-ce</span><br><span class="line"></span><br><span class="line">rm -rf /var/lib/docker</span><br><span class="line">rm -rf /var/run/docker</span><br><span class="line">rm -rf /etc/docker</span><br></pre></td></tr></table></figure></p>
+<p>安装一些必要的系统工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<p>添加软件源信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<p>更新 yum 缓存:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum makecache fast</span><br></pre></td></tr></table></figure>
+<p>安装 Docker-ce:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker-ce</span><br></pre></td></tr></table></figure>
+<p>启动 Docker 服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker start <span class="comment">#或 systemctl start docker</span></span><br></pre></td></tr></table></figure>
+<h3 id="镜像加速"><a href="#镜像加速" class="headerlink" title="镜像加速"></a>镜像加速</h3><p>新版的 Docker 使用 /etc/docker/daemon.json（Linux）,如果没有这个文件就创建一个（我本机是没有的）。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"registry-mirrors"</span>: [<span class="string">"http://hub-mirror.c.163.com"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除-Docker-CE"><a href="#删除-Docker-CE" class="headerlink" title="删除 Docker CE"></a>删除 Docker CE</h3><p>执行以下命令来删除 Docker CE：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker-ce</span><br><span class="line"></span><br><span class="line">rm -rf /var/lib/docker</span><br><span class="line">rm -rf /var/run/docker</span><br><span class="line">rm -rf /etc/docker</span><br></pre></td></tr></table></figure>
 <h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>可以在 Docker 容器内运行程序，通过使用 <code>docker run</code> 命令在容器内运行一个应用程序。运行程序首先要先获得镜像，获取镜像文件可以通过从仓库 pull, 也可通过 Dockerfile 自行构建。如果执行 <code>docker run</code> 时容器内没有可用的镜像就会尝试从官方获取。</p>
 <h3 id="通过从官方拉去镜像"><a href="#通过从官方拉去镜像" class="headerlink" title="通过从官方拉去镜像"></a>通过从官方拉去镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
 <h3 id="通过-Dockerfile-构建"><a href="#通过-Dockerfile-构建" class="headerlink" title="通过 Dockerfile 构建"></a>通过 Dockerfile 构建</h3><p>可以通过命令 <code>docker build -t 镜像名称 Dockerfile文件路径</code> 来自动构建镜像。<br>输入内容(这段 Demo 可以按照<a href="http://localhost:4000/2018/09/13/docker/#more" target="_blank" rel="noopener">官网</a>提供的来，这里自己觉得方便就好)</p>
 <ul>
 <li><p>创建 Dockerfile 文件</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># MAINTAINER        H.J.Yang &lt;yhj_box@foxmail.com&gt;</span></span><br><span class="line"><span class="comment"># DOCKER-VERSION    18.06.1-ce, build e68fc7a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Dockerizing hello/docker: Dockerfile for building hello/docker images</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">FROM       centos:centos7.1.1503</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [<span class="string">"/bin/echo"</span>,<span class="string">"hello_docker"</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># MAINTAINER        H.J.Yang &lt;yhj_box@foxmail.com&gt;</span></span><br><span class="line"><span class="comment"># DOCKER-VERSION    18.06.1-ce, build e68fc7a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Dockerizing hello/docker: Dockerfile for building hello/docker images</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">FROM       centos:centos7.1.1503</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [<span class="string">"/bin/echo"</span>,<span class="string">"hello_docker"</span>]</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>build 一个镜像</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  build -t hello/docker:0.1  .</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  build -t hello/docker:0.1  .</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查看可用的镜像</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images <span class="comment">#或 docker image ls</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images <span class="comment">#或 docker image ls</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>目前结果如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@centos3 hello_world]<span class="comment"># docker image ls</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hello/docker        0.1                 0838b223b2f7        9 minutes ago       212MB</span><br><span class="line">centos              centos7.1.1503      b96d683c39b0        5 weeks ago         212MB</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>运行容器<br>  使用 <code>docker run hello/docker:0.1</code> 命令运行后会随机生成一个容器名称，也可通过  <code>--name</code> 参数指定：<code>docker run --name hello hello/docker:0.1</code>, 指定生成的容器名为 hello。</p>
+<li><p>运行容器<br>使用 <code>docker run hello/docker:0.1</code> 命令运行后会随机生成一个容器名称，也可通过 <code>--name</code> 参数指定：<code>docker run --name hello hello/docker:0.1</code>, 指定生成的容器名为 hello。</p>
 </li>
 </ul>
 <h2 id="创建-Tomcat-容器"><a href="#创建-Tomcat-容器" class="headerlink" title="创建 Tomcat 容器"></a>创建 Tomcat 容器</h2><p>Java web 要跑起来，就需要一些系统资源和环境变量。容器一旦运行，就不建议手动修改容器内部的配置，若必须进入容器修改那修改后就需要使用 <code>docker commit containerid imagename</code> 来把修改过的容器提交到一个镜像文件。</p>
 <h3 id="创建-Centos7-镜像"><a href="#创建-Centos7-镜像" class="headerlink" title="创建 Centos7 镜像"></a>创建 Centos7 镜像</h3><p>这里就简单的依赖 centos7.1.1503 来创建 Centos7 的基础镜像。先创建一个 Centos7 的基础镜像,主要是安装一些必要工具软件和对容器做一些必要的设置，后面的镜像都依赖这个基础镜像创建。如：下面 Dockerfile 文件中设置了签名和 root 用户的密码后才可用 通过 ssh 连接上运行的镜像容器。</p>
 <ul>
-<li><p>Dockerfile</p>
+<li>Dockerfile</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># MAINTAINER        H.J.Yang &lt;yhj_box@foxmail.com&gt;</span></span><br><span class="line"><span class="comment"># DOCKER-VERSION    18.06.1-ce, build e68fc7a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Dockerizing centos7 : Dockerfile for building centos7 images</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">FROM       centos:centos7.1.1503</span><br><span class="line">MAINTAINER H.J.Yang&lt;yhj_box@foxmail.com&gt;</span><br><span class="line"></span><br><span class="line">ENV TZ <span class="string">"Asia/Shanghai"</span></span><br><span class="line">ENV TERM xterm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RUN yum install -y curl wget tar bzip2 unzip vim-enhanced passwd sudo yum-utils hostname net-tools rsync man &amp;&amp; \</span><br><span class="line">    yum install -y gcc gcc-c++ git make automake cmake patch logrotate python-devel libpng-devel libjpeg-devel &amp;&amp; \</span><br><span class="line">    yum install -y openssh-server &amp;&amp; \</span><br><span class="line">    yum clean all</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成签名</span></span><br><span class="line">RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">""</span></span><br><span class="line">RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N <span class="string">""</span></span><br><span class="line">RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置root用户密码</span></span><br><span class="line">RUN <span class="string">"/bin/echo"</span> root | passwd --stdin root</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除缓存</span></span><br><span class="line">RUN  rm -rf /var/cache/yum</span><br><span class="line"></span><br><span class="line"><span class="comment">#暴露 22 端口</span></span><br><span class="line">EXPOSE 22</span><br><span class="line"></span><br><span class="line">CMD [<span class="string">"/bin/echo"</span>, <span class="string">"centos7 started"</span>]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建镜像<br>  <code>docker build -t base/centos7:0.1 .</code></p>
-</li>
-<li><p>运行容器<br>  <code>docker run -d -p 7777:22 --name centos7 base/centos7:0.1 /usr/sbin/sshd -D</code></p>
 <ul>
-<li>参数：<br>  -d 表示在后台运行一个容器<br>  -p 表示把宿主机的 7777 端口和容器的 22 端口做映射<br>  -D 这个是 sshd 的表示以守护进程的方式启动</li>
+<li><p>创建镜像<br><code>docker build -t base/centos7:0.1 .</code></p>
+</li>
+<li><p>运行容器<br><code>docker run -d -p 7777:22 --name centos7 base/centos7:0.1 /usr/sbin/sshd -D</code></p>
+<ul>
+<li>参数：<br> -d 表示在后台运行一个容器<br>-p 表示把宿主机的 7777 端口和容器的 22 端口做映射<br>-D 这个是 sshd 的表示以守护进程的方式启动</li>
 </ul>
 </li>
-<li><p>连接测试<br>  <code>ssh root@localhost -p 7777</code>，这是在宿主机上访问。若想在非宿主机上访问则需要打开防火墙，命令如下：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=7777/tcp</span><br></pre></td></tr></table></figure>
+<li><p>连接测试<br><code>ssh root@localhost -p 7777</code>，这是在宿主机上访问。若想在非宿主机上访问则需要打开防火墙，命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=7777/tcp</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="创建-Tomcat-镜像"><a href="#创建-Tomcat-镜像" class="headerlink" title="创建 Tomcat 镜像"></a>创建 Tomcat 镜像</h3><p>创建前需要去下载 tomcat 和 jdk 这两必要的系统环境，注意下载 liunx 版本的，win 的我没试过能不能在 liunx 下跑。但是 Java native 方法这些我估计是不行。新建一个 tomcat 目录把下载好的 jdk 和 tomcat 都放到 tomcat 目录下。</p>
 <ul>
-<li>Dockerfile<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># MAINTAINER        H.J.Yang &lt;yhj_box@foxmail.com&gt;</span></span><br><span class="line"><span class="comment"># DOCKER-VERSION    18.06.1-ce, build e68fc7a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Dockerizing tomcat8/centos7: Dockerfile for building hello/docker images</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">FROM base/centos7:0.1</span><br><span class="line">MAINTAINER H.J.Yang &lt;yhj_box@foxmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把宿主机的拷贝到容器的指定目录下，COPY 也有可用拷贝，但是 ADD 有解压功能</span></span><br><span class="line">ADD jdk-8u181-linux-x64.tar.gz	 /usr/<span class="built_in">local</span>/</span><br><span class="line">ADD apache-tomcat-8.0.53.tar.gz  /usr/<span class="built_in">local</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改变目录名称</span></span><br><span class="line">RUN mv /usr/<span class="built_in">local</span>/apache-tomcat-8.0.53 /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line">ENV JAVA_HOME /usr/<span class="built_in">local</span>/jdk1.8.0_181</span><br><span class="line">ENV CLASSPATH <span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar </span><br><span class="line">ENV CLASSPATH <span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar </span><br><span class="line">ENV CATALINA_HOME /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line">ENV CATALINA_BASE /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line">ENV PATH <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$CATALINA_HOME</span>/lib:<span class="variable">$CATALINA_HOME</span>/bin </span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器时启动 tomcat</span></span><br><span class="line">ENTRYPOINT [<span class="string">"/usr/local/tomcat8/bin/catalina.sh"</span>,<span class="string">"run"</span>]</span><br></pre></td></tr></table></figure>
-</li>
+<li>Dockerfile</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># MAINTAINER        H.J.Yang &lt;yhj_box@foxmail.com&gt;</span></span><br><span class="line"><span class="comment"># DOCKER-VERSION    18.06.1-ce, build e68fc7a</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Dockerizing tomcat8/centos7: Dockerfile for building hello/docker images</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">FROM base/centos7:0.1</span><br><span class="line">MAINTAINER H.J.Yang &lt;yhj_box@foxmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把宿主机的拷贝到容器的指定目录下，COPY 也有可用拷贝，但是 ADD 有解压功能</span></span><br><span class="line">ADD jdk-8u181-linux-x64.tar.gz	 /usr/<span class="built_in">local</span>/</span><br><span class="line">ADD apache-tomcat-8.0.53.tar.gz  /usr/<span class="built_in">local</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改变目录名称</span></span><br><span class="line">RUN mv /usr/<span class="built_in">local</span>/apache-tomcat-8.0.53 /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line">ENV JAVA_HOME /usr/<span class="built_in">local</span>/jdk1.8.0_181</span><br><span class="line">ENV CLASSPATH <span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line">ENV CLASSPATH <span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line">ENV CATALINA_HOME /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line">ENV CATALINA_BASE /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line">ENV PATH <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$CATALINA_HOME</span>/lib:<span class="variable">$CATALINA_HOME</span>/bin</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器时启动 tomcat</span></span><br><span class="line">ENTRYPOINT [<span class="string">"/usr/local/tomcat8/bin/catalina.sh"</span>,<span class="string">"run"</span>]</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>创建镜像<br>  <code>docker build -t tomcat8/centos7:0.1  .</code></p>
+<li><p>创建镜像<br><code>docker build -t tomcat8/centos7:0.1 .</code></p>
 </li>
-<li><p>运行容器<br>  <code>docker run -d -p 9000:8080 --name tomcat8 tomcat8/centos7:0.1</code></p>
+<li><p>运行容器<br><code>docker run -d -p 9000:8080 --name tomcat8 tomcat8/centos7:0.1</code></p>
 </li>
-<li><p>测试容器<br>  <code>wget localhost:9000</code> 这个命令会抓取到一个 index.html 文件。如果想要在非宿主机的浏览器访问需要打开防火墙，命令如下：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=9000/tcp</span><br></pre></td></tr></table></figure>
+<li><p>测试容器<br><code>wget localhost:9000</code> 这个命令会抓取到一个 index.html 文件。如果想要在非宿主机的浏览器访问需要打开防火墙，命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=9000/tcp</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="创建-Mysql-容器"><a href="#创建-Mysql-容器" class="headerlink" title="创建 Mysql 容器"></a>创建 Mysql 容器</h2><p> 获取一个 MySQL 容器可以通过命令在之前创建的基础系统上安装 mysql 实现，也可以通过  pull 拉取现有的 mysql镜像。</p>
+<h2 id="创建-Mysql-容器"><a href="#创建-Mysql-容器" class="headerlink" title="创建 Mysql 容器"></a>创建 Mysql 容器</h2><p>获取一个 MySQL 容器可以通过命令在之前创建的基础系统上安装 mysql 实现，也可以通过 pull 拉取现有的 mysql 镜像。</p>
 <h3 id="使用-pull-拉去官方镜像"><a href="#使用-pull-拉去官方镜像" class="headerlink" title="使用 pull 拉去官方镜像"></a>使用 pull 拉去官方镜像</h3><p>命令： <code>docker pull mysql:5.7.17</code></p>
-<h3 id="运行-mysql容器"><a href="#运行-mysql容器" class="headerlink" title="运行 mysql容器"></a>运行 mysql容器</h3><p>命令：<code>docker run -d -p 5555:3306 --name mysql5.7  -v /var/lib/mysql/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7.17</code>，执行后打开防火墙外部设备就通过宿主机 5555 端口访问到数据库容器。若其他容器数据库容器则需要通过数据库容器本身的IP地址和 3306 端口访问。 </p>
+<h3 id="运行-mysql-容器"><a href="#运行-mysql-容器" class="headerlink" title="运行 mysql 容器"></a>运行 mysql 容器</h3><p>命令：<code>docker run -d -p 5555:3306 --name mysql5.7 -v /var/lib/mysql/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7.17</code>，执行后打开防火墙外部设备就通过宿主机 5555 端口访问到数据库容器。若其他容器数据库容器则需要通过数据库容器本身的 IP 地址和 3306 端口访问。</p>
 <ul>
-<li>参数：<br>  -v：表示通过挂载卷的方式运行，可通过：<code>docker inspect &lt;containerID&gt;</code> 查看容器内部的信息。<br>  -e: 表示环境变量和 Dockerfile 中 EVN 意思一样。<br>  -p：表示把宿主机 5555 端口映射到容器的 3306 端口。</li>
+<li>参数：<br>-v：表示通过挂载卷的方式运行，可通过：<code>docker inspect &lt;containerID&gt;</code> 查看容器内部的信息。<br>-e: 表示环境变量和 Dockerfile 中 EVN 意思一样。<br>-p：表示把宿主机 5555 端口映射到容器的 3306 端口。</li>
 </ul>
 <h2 id="发布-Web-应用"><a href="#发布-Web-应用" class="headerlink" title="发布 Web 应用"></a>发布 Web 应用</h2><p>发布到 Tomcat 容器内部的 web 应用访问数据库不能通过宿主机的 IP 及端口访问，要通过数据容器的自己的 IP 地址和端口。</p>
 <ul>
-<li>查看数据容器的 IP，命令：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@centos3 mysql]<span class="comment"># docker inspect --format='&#123;&#123;.NetworkSettings.IPAddress&#125;&#125;' mysql5.7</span></span><br><span class="line">172.17.0.2</span><br><span class="line">[root@centos3 mysql]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>查看数据容器的 IP，命令：</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@centos3 mysql]<span class="comment"># docker inspect --format='&#123;&#123;.NetworkSettings.IPAddress&#125;&#125;' mysql5.7</span></span><br><span class="line">172.17.0.2</span><br><span class="line">[root@centos3 mysql]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>得到 IP 地址就可以在 web 应用的 JDBC 中配置。</p>
 <ul>
-<li>发布 Web 项目<br>这里通过 <code>-v</code> 参数把 war 包挂载到 tomcat 容器内运行。此处就把 war 包放到宿主机的 tomcat 目录中。<br>命令：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9000:8080 -v /docker/tomcat/SimpleDemo.war:/usr/<span class="built_in">local</span>/tomcat8/webapps/SimpleDemo.war --name tomcat8 tomcat8/centos7:0.1</span><br></pre></td></tr></table></figure>
-</li>
+<li>发布 Web 项目<br>这里通过 <code>-v</code> 参数把 war 包挂载到 tomcat 容器内运行。此处就把 war 包放到宿主机的 tomcat 目录中。<br>命令：</li>
 </ul>
-<p>打包时jdbc 配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driver=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url=jdbc:mysql://172.17.0.2:3306/demo?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=123456</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9000:8080 -v /docker/tomcat/SimpleDemo.war:/usr/<span class="built_in">local</span>/tomcat8/webapps/SimpleDemo.war --name tomcat8 tomcat8/centos7:0.1</span><br></pre></td></tr></table></figure>
+<p>打包时 jdbc 配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driver=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url=jdbc:mysql://172.17.0.2:3306/demo?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=123456</span><br></pre></td></tr></table></figure>
 <p>最后打开防火墙的 9999 端口就可以在非宿主机上通过浏览器范围了，如果不能达到预先的效果，可以通过 <code>docker logs -f containerName</code> 查看容器日志。</p>
 
       
@@ -557,6 +566,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/11/mysqldump/" rel="prev" title="mysqldump 翻译">
+                mysqldump 翻译 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -630,7 +643,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -647,7 +660,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -716,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.</span> <span class="nav-text">安装 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-安装-Dodker-CE"><span class="nav-number">1.1.</span> <span class="nav-text">CentOS 安装 Dodker CE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像加速"><span class="nav-number">1.2.</span> <span class="nav-text">镜像加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除-Docker-CE"><span class="nav-number">1.3.</span> <span class="nav-text">删除 Docker CE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过从官方拉去镜像"><span class="nav-number">2.1.</span> <span class="nav-text">通过从官方拉去镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-Dockerfile-构建"><span class="nav-number">2.2.</span> <span class="nav-text">通过 Dockerfile 构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Tomcat-容器"><span class="nav-number">3.</span> <span class="nav-text">创建 Tomcat 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Centos7-镜像"><span class="nav-number">3.1.</span> <span class="nav-text">创建 Centos7 镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Tomcat-镜像"><span class="nav-number">3.2.</span> <span class="nav-text">创建 Tomcat 镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Mysql-容器"><span class="nav-number">4.</span> <span class="nav-text">创建 Mysql 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-pull-拉去官方镜像"><span class="nav-number">4.1.</span> <span class="nav-text">使用 pull 拉去官方镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行-mysql容器"><span class="nav-number">4.2.</span> <span class="nav-text">运行 mysql容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布-Web-应用"><span class="nav-number">5.</span> <span class="nav-text">发布 Web 应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.</span> <span class="nav-text">安装 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-安装-Dodker-CE"><span class="nav-number">1.1.</span> <span class="nav-text">CentOS 安装 Dodker CE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像加速"><span class="nav-number">1.2.</span> <span class="nav-text">镜像加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除-Docker-CE"><span class="nav-number">1.3.</span> <span class="nav-text">删除 Docker CE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过从官方拉去镜像"><span class="nav-number">2.1.</span> <span class="nav-text">通过从官方拉去镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-Dockerfile-构建"><span class="nav-number">2.2.</span> <span class="nav-text">通过 Dockerfile 构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Tomcat-容器"><span class="nav-number">3.</span> <span class="nav-text">创建 Tomcat 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Centos7-镜像"><span class="nav-number">3.1.</span> <span class="nav-text">创建 Centos7 镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Tomcat-镜像"><span class="nav-number">3.2.</span> <span class="nav-text">创建 Tomcat 镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Mysql-容器"><span class="nav-number">4.</span> <span class="nav-text">创建 Mysql 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-pull-拉去官方镜像"><span class="nav-number">4.1.</span> <span class="nav-text">使用 pull 拉去官方镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行-mysql-容器"><span class="nav-number">4.2.</span> <span class="nav-text">运行 mysql 容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布-Web-应用"><span class="nav-number">5.</span> <span class="nav-text">发布 Web 应用</span></a></li></ol></div>
             
 
           </div>
@@ -736,7 +751,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
